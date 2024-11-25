@@ -8,33 +8,77 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Intentar obtener el token desde la URL
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("accessToken");
 
     if (token) {
-      // Almacenar el token en localStorage
       localStorage.setItem("accessToken", token);
       setIsLoggedIn(true);
-      // Redirigir al Dashboard
-      router.push("/dashboard"); // Redirige a /dashboard
+      router.push("/dashboard");
     }
-  }, []); // Solo ejecutar al cargar la página
+  }, []);
 
   const handleLogin = () => {
-    router.push("http://localhost:8080/login"); // Redirigir al login de Spotify
+    router.push("http://localhost:8080/login");
   };
 
   return (
-    <div>
-      <h1>Bienvenido al Dashboard</h1>
+    <div style={styles.container}>
+      <h1 style={styles.title}>¡Bienvenido a Stats Jobo!</h1>
       {!isLoggedIn ? (
-        <button onClick={handleLogin}>Login con Spotify</button>
+        <button style={styles.spotifyButton} onClick={handleLogin}>
+          <img
+            src="/Spotify_icon.png"
+            alt="Spotify Logo"
+            style={styles.spotifyLogo}
+          />
+          Iniciar Sesión con Spotify
+        </button>
       ) : (
         <div>
-          <button onClick={() => router.push("/dashboard")}>Ir al Dashboard</button>
+          <button style={styles.spotifyButton} onClick={() => router.push("/dashboard")}>
+            Ir al Dashboard
+          </button>
         </div>
       )}
     </div>
   );
 }
+
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    backgroundColor: "#e8f5e9", // Fondo
+    fontFamily: "'Arial', sans-serif",
+    textAlign: "center",
+  },
+  title: {
+    fontSize: "2.5rem",
+    marginBottom: "2rem",
+    color: "#333",
+  },
+  spotifyButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "10px",
+    padding: "1rem 2rem",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    color: "#fff",
+    backgroundColor: "#11181c", // Boton
+    border: "none",
+    borderRadius: "8px", // Borde
+    cursor: "pointer",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    transition: "all 0.3s ease",
+  },
+  spotifyLogo: {
+    width: "36px",
+    height: "36px",
+  },
+};
